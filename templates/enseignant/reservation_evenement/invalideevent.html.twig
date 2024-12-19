@@ -1,0 +1,92 @@
+{% extends 'enseignant/enseignatevent.html.twig' %}
+
+{% block title %}Réservations Événements Invalides{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <!-- Bannière rouge pour signaler les réservations non valides -->
+    <div class="alert alert-danger text-center" role="alert" style="font-size: 1.2rem;">
+        🚨 <strong>Attention :</strong> Liste des réservations <span class="text-uppercase">non valides</span> 🚨
+    </div>
+
+    <h1 class="text-center mb-4">📋 Réservations Événements Invalides</h1>
+
+    <div class="list-group">
+        {% for reservation in reservations_invalides %}
+            <div class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <p>
+                        <strong>🆔 ID de la Réservation :</strong> {{ reservation.id }}<br>
+                        <strong>📅 Date de début :</strong> {{ reservation.DateDebutRE|date('d/m/Y') }}<br>
+                        <strong>📅 Date de fin :</strong> {{ reservation.DateFinRE|date('d/m/Y') }}<br>
+                        <strong>⚠️ Statut :</strong> <span class="text-danger">Invalide</span><br>
+                        <strong>📂 Classe de réservation :</strong> {{ reservation.ClassReservationEvent }}
+                    </p>
+                    {% if reservation.evenements|length > 0 %}
+                        <p>
+                            <strong>🎉 Événements associés :</strong>
+                        </p>
+                        <ul>
+                            {% for evenement in reservation.evenements %}
+                                <li>📌 {{ evenement.nomEvenement }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <em>🚫 Aucun événement associé</em>
+                    {% endif %}
+                </div>
+
+                <div class="d-flex flex-column">
+                    <!-- Boutons actions -->
+                    <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}" class="btn btn-warning btn-sm mb-2">
+                        ✏️ Modifier
+                    </a>
+                    <a href="{{ path('reservation_show', {'id': reservation.id}) }}" class="btn btn-info btn-sm mb-2">
+                        👁️ Voir
+                    </a>
+                   <form method="post" action="{{ path('reservation_evenement_delete', { id: reservation.id }) }}" 
+      style="display:inline;" onsubmit="return confirm('Êtes-vous sûr ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reservation.id) }}">
+    
+    <button class="btn btn-danger btn-sm"
+        data-bs-toggle="tooltip" 
+        title="{% if reservation.participants is not empty %}Impossible de supprimer cette réservation car elle a des participants{% endif %}"
+        {% if reservation.participants is not empty %}disabled{% endif %}>
+        <i class="fas fa-trash-alt"></i> Supprimer
+    </button>
+</form>
+
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-warning text-center">
+                😔 Aucune réservation invalide trouvée.
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJ+K5u7zR7+u7o5zK+K2LkT4AlzxvZr9/Ml78Gq4YXeb5gQzLHgEAmr2m68g" crossorigin="anonymous">
+    <style>
+        .list-group-item {
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #fdfdfe;
+            border: 1px solid #dee2e6;
+        }
+        .list-group-item:hover {
+            background-color: #f8f9fa;
+            border-color: #adb5bd;
+        }
+        .btn {
+            font-size: 0.9rem;
+        }
+    </style>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gnXddXytsC9G9ZtbwM5ISW6g52Q6jYZPCaytZ9InGr1xFbxVdsw6pGJ1yGVd7jfU" crossorigin="anonymous"></script>
+
+{% endblock %}
+
+

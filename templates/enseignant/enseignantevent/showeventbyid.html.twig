@@ -1,0 +1,84 @@
+{% extends 'enseignant/enseignatevent.html.twig' %}
+
+{% block title %}Détails de l'événement - {{ evenement.NomEvenement }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <!-- Header with Event Name -->
+        <div class="text-center mb-5" style="background-color: #3f51b5; padding: 50px; color: #fff; border-radius: 15px;">
+            <h1 class="display-4" style="font-weight: 700; letter-spacing: 1px;">{{ evenement.NomEvenement }}</h1>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <!-- Card to Hold Event Details -->
+                <div class="card shadow-lg border-0 rounded-lg mb-5" style="animation: fadeInUp 0.5s;">
+                    <div class="card-body p-5" style="background-color: #f8f9fa;">
+                        
+                        <!-- Event Name -->
+                        <div class="form-group mb-4">
+                            <label for="eventName" class="form-label h5 text-muted">
+                                <i class="fas fa-calendar-alt"></i> Nom de l'événement
+                            </label>
+                            <input type="text" id="eventName" class="form-control form-control-lg border-0 bg-light shadow-sm" value="{{ evenement.NomEvenement }}" disabled />
+                        </div>
+
+                        <!-- Event Description -->
+                        <div class="form-group mb-4">
+                            <label for="eventDescription" class="form-label h5 text-muted">
+                                <i class="fas fa-align-left"></i> Description de l'événement
+                            </label>
+                            <textarea id="eventDescription" class="form-control form-control-lg border-0 bg-light shadow-sm" rows="6" disabled>{{ evenement.DescriptionEvenement }}</textarea>
+                        </div>
+
+                        <!-- Event Image -->
+                        <div class="form-group mb-4">
+                            <label for="eventImage" class="form-label h5 text-muted">
+                                <i class="fas fa-image"></i> Image de l'événement
+                            </label>
+                            <div class="text-center mt-3">
+                                {% if evenement.ImageEvenement %}
+                                    <img src="{{ asset('uploads/photos/' ~ evenement.ImageEvenement) }}" alt="{{ evenement.NomEvenement }}" class="img-fluid rounded-lg shadow-lg" style="max-height: 400px; width: auto; transition: transform 0.3s;" 
+                                         onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';"/>
+                                {% else %}
+                                    <p class="text-muted">Aucune image disponible pour cet événement.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Event Type -->
+                        <div class="form-group mb-4">
+                            <label for="eventType" class="form-label h5 text-muted">
+                                <i class="fas fa-tags"></i> Type d'événement
+                            </label>
+                            <input type="text" id="eventType" class="form-control form-control-lg border-0 bg-light shadow-sm" value="{{ evenement.TypeEvenement }}" disabled />
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Animation for fade-in effect */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Smooth hover effect on buttons */
+        .btn:hover {
+            background-color: #5c6bc0 !important;
+            color: white !important;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+{% endblock %}

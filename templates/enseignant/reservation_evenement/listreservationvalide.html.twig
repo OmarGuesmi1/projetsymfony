@@ -1,0 +1,95 @@
+{% extends 'enseignant/enseignatevent.html.twig' %}
+
+{% block body %}
+<div class="container mt-5">
+    <!-- Bannière de succès -->
+    <div class="alert alert-success text-center" role="alert" style="font-size: 1.5rem;">
+        ✅ Félicitations ! Cette réservation est <strong>validée</strong>.
+    </div>
+
+    <h1 class="text-center mb-4" style="font-size: 2rem;">📋 Détails de la Réservation Validée</h1>
+
+    <div class="card shadow-lg">
+        <!-- En-tête de la carte -->
+        <div class="card-header text-white bg-success">
+            <h2 class="mb-0">Réservation n°{{ reservation.id }}</h2>
+        </div>
+
+        <!-- Corps de la carte -->
+        <div class="card-body">
+            <p style="font-size: 1.2rem;"><strong>📅 Date de début :</strong> {{ reservation.DateDebutRE|date('d/m/Y') }}</p>
+            <p style="font-size: 1.2rem;"><strong>📅 Date de fin :</strong> {{ reservation.DateFinRE|date('d/m/Y') }}</p>
+            <p style="font-size: 1.2rem;"><strong>📂 Classe de réservation :</strong> {{ reservation.ClassReservationEvent }}</p>
+            <p style="font-size: 1.2rem;"><strong>✔️ Statut :</strong> <span class="text-success">Validée</span></p>
+
+            <!-- Tableau des participants -->
+            {% if reservation.participants|length > 0 %}
+                <h3 class="mt-4">👥 Liste des participants :</h3>
+                <table class="table table-striped mt-3">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Prénom</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Téléphone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for participant in reservation.participants %}
+                            <tr>
+                                <td>{{ participant.id }}</td>
+                                <td>{{ participant.nom }}</td>
+                                <td>{{ participant.prenom }}</td>
+                                <td>{{ participant.email }}</td>
+                                <td>{{ participant.telephone }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="text-center mt-4" style="font-size: 1.2rem;">🚫 Aucun participant associé.</p>
+            {% endif %}
+
+            <!-- Événements associés -->
+            {% if reservation.evenements|length > 0 %}
+                <h3 class="mt-4">🎉 Événements associés :</h3>
+                <div class="row mt-3">
+                    {% for evenement in reservation.evenements %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <!-- Conteneur centré pour la photo -->
+                                <div class="d-flex justify-content-center align-items-center" style="height: 250px; margin-left: 10px;">
+                                    {% if evenement.ImageEvenement %}
+                                        <img src="{{ asset('uploads/photos/' ~ evenement.ImageEvenement) }}" 
+                                             alt="Photo de {{ evenement.nomEvenement }}" 
+                                             class="rounded img-fluid" 
+                                             style="max-height: 240px; object-fit: cover;">
+                                    {% else %}
+                                        <div class="d-flex align-items-center justify-content-center bg-light" 
+                                             style="height: 250px; width: 100%; color: #6c757d; font-size: 1.5rem;">
+                                            🚫 Pas de photo
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Corps de la carte de l'événement -->
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">📌 {{ evenement.nomEvenement }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-center mt-4" style="font-size: 1.2rem;">🚫 Aucun événement associé.</p>
+            {% endif %}
+             <div class="text-center mt-4">
+                <a href="{{ pdf_url }}" class="btn btn-primary" target="_blank">
+                    <i class="bi bi-file-earmark-pdf"></i> Télécharger le PDF de la réservation
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

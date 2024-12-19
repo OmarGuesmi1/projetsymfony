@@ -1,0 +1,90 @@
+{% extends 'enseignant/enseignatevent.html.twig' %}
+
+{% block title %}Liste des Participants{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .fade-in {
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .action-buttons a, .action-buttons form button {
+        margin-right: 5px;
+    }
+
+    .action-buttons a:hover {
+        text-decoration: underline;
+    }
+
+    .btn-danger:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(255, 0, 0, 0.2);
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5 fade-in">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>👥 Liste des Participants</h1>
+        <a href="{{ path('participant_new') }}" class="btn btn-success">
+            ➕ Créer un nouveau participant
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>📛 Nom</th>
+                    <th>📝 Prénom</th>
+                    <th>📧 Email</th>
+                    <th>📅 Date d'Inscription</th>
+                    <th>📞 Téléphone</th>
+                    <th class="text-center">🔧 Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for participant in participants %}
+                    <tr>
+                        <td>{{ participant.Nom }}</td>
+                        <td>{{ participant.Prenom }}</td>
+                        <td>{{ participant.Email }}</td>
+                        <td>{{ participant.DateInscription ? participant.DateInscription|date('Y-m-d') : 'Non défini' }}</td>
+                        <td>{{ participant.Telephone }}</td>
+                        <td class="text-center action-buttons">
+                            <a href="{{ path('participant_show', {'id': participant.id}) }}" class="btn btn-primary btn-sm">
+                                👁️ Voir
+                            </a>
+                            <a href="{{ path('participant_edit', {'id': participant.id}) }}" class="btn btn-warning btn-sm">
+                                ✏️ Modifier
+                            </a>
+                            <form method="post" action="{{ path('participant_delete', {'id': participant.id}) }}" style="display:inline;">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ participant.id) }}">
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce participant ?');">
+                                    🗑️ Supprimer
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center">Aucun participant trouvé</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

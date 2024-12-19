@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails de la Réservation (PDF)</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            font-size: 2rem;
+        }
+        h2 {
+            color: #4CAF50;
+            margin-top: 30px;
+            font-size: 1.5rem;
+        }
+        p {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            padding: 10px;
+            text-align: left;
+        }
+        td {
+            padding: 10px;
+        }
+        .event-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+            justify-content: center; /* Centre les cartes */
+        }
+        .event-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 400px; /* Taille augmentée */
+            text-align: center;
+        }
+        .event-image {
+            height: 300px; /* Augmenté pour une photo plus grande */
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .event-image img {
+            max-height: 100%;
+            width: auto;
+        }
+        .event-details {
+            padding: 10px;
+        }
+        .event-title {
+            font-size: 1.2rem;
+            color: #555;
+        }
+        .event-no-photo {
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f9f9f9;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <h1>Détails de la Réservation</h1>
+    <p><strong>Classe :</strong> {{ reservation.classReservationEvent }}</p>
+    <p><strong>Date de début :</strong> {{ reservation.dateDebutRE|date('d/m/Y') }}</p>
+    <p><strong>Date de fin :</strong> {{ reservation.dateFinRE|date('d/m/Y') }}</p>
+
+    <h2>Participants</h2>
+    {% if reservation.Participants|length > 0 %}
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for participant in reservation.Participants %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ participant.nom }}</td>
+                        <td>{{ participant.email }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucun participant inscrit pour cette réservation.</p>
+    {% endif %}
+
+    <h2>Événements Associés</h2>
+    {% if reservation.evenements|length > 0 %}
+        <div class="event-container">
+            {% for evenement in reservation.evenements %}
+                <div class="event-card">
+                    <div class="event-image">
+                        {% if evenement.base64Image %}
+                            <img src="{{ evenement.base64Image }}" alt="Image de {{ evenement.nomEvenement }}">
+                        {% else %}
+                            <div class="event-no-photo">Pas de photo</div>
+                        {% endif %}
+                    </div>
+                    <div class="event-details">
+                        <h3 class="event-title">{{ evenement.nomEvenement }}</h3>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Aucun événement associé.</p>
+    {% endif %}
+
+    <footer>
+        Généré par notre système de réservation--BiblioNet 2024
+    </footer>
+</body>
+</html>

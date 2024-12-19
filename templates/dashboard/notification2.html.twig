@@ -1,0 +1,43 @@
+{% extends 'dashboard/notifcation.html.twig' %}
+
+{% block title %}Notifications{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">Notifications</h1>
+    {% if notifications is not empty %}
+        <div class="row">
+            {% for notification in notifications %}
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="bi bi-bell-fill"></i> Notification</h5>
+                            <p class="card-text"><strong>Message :</strong> {{ notification.messageevent }}</p>
+                            {% if notification.reservationEvenement %}
+                                <hr>
+                                <p class="card-text">
+                                    <strong>ID Réservation :</strong> {{ notification.reservationEvenement.id }}<br>
+                                    <strong>Date début :</strong> {{ notification.reservationEvenement.dateDebutRE|date('Y-m-d') }}<br>
+                                    <strong>Date fin :</strong> {{ notification.reservationEvenement.dateFinRE|date('Y-m-d') }}<br>
+                                    <strong>Statut :</strong> 
+                                    <span class="badge {{ notification.reservationEvenement.statutReservationEvent ? 'bg-success' : 'bg-danger' }}">
+                                        {{ notification.reservationEvenement.statutReservationEvent ? 'Validée' : 'En attente' }}
+                                    </span>
+                                </p>
+                                {% if not notification.reservationEvenement.statutReservationEvent %}
+                                    <!-- Bouton de validation -->
+                                    <a href="{{ path('validate_notification', { id: notification.reservationEvenement.id }) }}" class="btn btn-primary mt-2"><i class="bi bi-check-lg"></i> Valider</a>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center" role="alert">
+            Aucune notification disponible
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

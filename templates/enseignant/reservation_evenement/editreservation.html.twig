@@ -1,0 +1,102 @@
+{% extends 'enseignant/enseignatevent.html.twig' %}
+
+{% block title %}Modifier la Réservation{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="text-primary fw-bold display-5">Modifier la Réservation</h1>
+    </div>
+
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+        <div class="card-header bg-gradient-primary text-white text-center py-4">
+            <h2 class="mb-0"><i class="bi bi-pencil-square"></i> Formulaire de Modification</h2>
+        </div>
+        <div class="card-body px-4 py-5">
+            {{ form_start(form) }}
+
+            <!-- Détails de la réservation -->
+            <div class="row gy-4">
+                <div class="col-md-6">
+                    {{ form_row(form.DateDebutRE, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.DateFinRE, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="col-md-12">
+                    {{ form_row(form.ClassReservationEvent, {'attr': {'class': 'form-select'}}) }}
+                </div>
+            </div>
+
+            <!-- Participants -->
+            <div class="mt-4">
+                <h3 class="fw-bold">Participants</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Sélection</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for participant in participants %}
+                            <tr>
+                                <td>
+                                    <input 
+                                        type="checkbox" 
+                                        name="participants[]" 
+                                        value="{{ participant.id }}" 
+                                        {% if participant in reservation.participants %}checked{% endif %}
+                                    >
+                                </td>
+                                <td>{{ participant.nom }}</td>
+                                <td>{{ participant.prenom }}</td>
+                                <td>{{ participant.email }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Événements -->
+            <div class="mt-4">
+                <h3 class="fw-bold">Événements</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Sélection</th>
+                            <th>Nom de l'Événement</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for evenement in evenements %}
+                            <tr>
+                                <td>
+                                    <input 
+                                        type="checkbox" 
+                                        name="evenements[]" 
+                                        value="{{ evenement.id }}" 
+                                        {% if evenement in reservation.evenements %}checked{% endif %}
+                                    >
+                                </td>
+                                <td>{{ evenement.nomEvenement }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Bouton Sauvegarder -->
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="bi bi-save"></i> Sauvegarder
+                </button>
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

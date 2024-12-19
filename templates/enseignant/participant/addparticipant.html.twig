@@ -1,0 +1,129 @@
+{% extends 'enseignant/enseignatevent.html.twig' %}
+
+{% block title %}Créer un Participant{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .form-container {
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .emoji-label {
+        font-size: 1.2rem;
+        margin-right: 5px;
+    }
+
+    .btn-primary {
+        background: linear-gradient(45deg, #0d6efd, #6610f2);
+        color: #fff;
+        border: none;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-primary:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-secondary {
+        margin-top: 15px;
+    }
+
+    .progress-bar {
+        animation: progressAnim 2s infinite;
+    }
+
+    @keyframes progressAnim {
+        0% { width: 0; }
+        100% { width: 100%; }
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h1>👤 Créer un Participant</h1>
+        <span class="badge bg-primary">Nouvelle Inscription</span>
+    </div>
+
+    <!-- Progress bar simulation -->
+    
+
+    <div class="card shadow-sm p-4 form-container">
+{{ form_start(form, {'attr': {'class': 'form-horizontal', 'novalidate': 'novalidate'}}) }}
+
+        <div class="form-group mb-3">
+            <label class="form-label">
+                <span class="emoji-label">📛</span>{{ form_label(form.Nom, 'Nom du participant') }}
+            </label>
+            <div class="input-group">
+                <span class="input-group-text">🔤</span>
+                {{ form_widget(form.Nom, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le nom'}}) }}
+            </div>
+            {{ form_errors(form.Nom) }}
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="form-label">
+                <span class="emoji-label">📝</span>{{ form_label(form.Prenom, 'Prénom') }}
+            </label>
+            <div class="input-group">
+                <span class="input-group-text">🔤</span>
+                {{ form_widget(form.Prenom, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le prénom'}}) }}
+            </div>
+            {{ form_errors(form.Prenom) }}
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="form-label">
+                <span class="emoji-label">📧</span>{{ form_label(form.Email, 'Adresse email') }}
+            </label>
+            <div class="input-group">
+                <span class="input-group-text">📧</span>
+                {{ form_widget(form.Email, {'attr': {'class': 'form-control', 'placeholder': 'Entrez une adresse email valide'}}) }}
+            </div>
+            {{ form_errors(form.Email) }}
+        </div>
+
+        <div class="form-group mb-3">
+    <label class="form-label">
+        <span class="emoji-label">📅</span>{{ form_label(form.DateInscription, 'Date d\'inscription') }}
+    </label>
+    <div class="input-group">
+        <span class="input-group-text">📅</span>
+        {{ form_widget(form.DateInscription, {'attr': {'class': 'form-control', 'placeholder': 'Sélectionner une date'}}) }}
+    </div>
+    {{ form_errors(form.DateInscription) }}
+</div>
+
+        <div class="form-group mb-3">
+            <label class="form-label">
+                <span class="emoji-label">📞</span>{{ form_label(form.Telephone, 'Téléphone') }}
+            </label>
+            <div class="input-group">
+                <span class="input-group-text">📞</span>
+                {{ form_widget(form.Telephone, {'attr': {'class': 'form-control', 'placeholder': 'Entrez un numéro de téléphone'}}) }}
+            </div>
+            {{ form_errors(form.Telephone) }}
+        </div>
+
+        <div class="text-center">
+            <button class="btn btn-primary">💾 Enregistrer</button>
+        </div>
+        
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}

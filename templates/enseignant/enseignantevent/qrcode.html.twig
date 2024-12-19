@@ -1,0 +1,63 @@
+{% extends 'enseignant/enseignatevent.html.twig' %}
+
+{% block title %}Détails de l'événement - {{ evenement.NomEvenement }}{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <!-- En-tête de l'événement -->
+    <div class="text-center mb-5" style="background-color: #3f51b5; padding: 50px; color: #fff; border-radius: 15px;">
+        <h1 class="display-4" style="font-weight: 700; letter-spacing: 1px;">{{ evenement.NomEvenement }}</h1>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <!-- Carte contenant les détails de l'événement -->
+            <div class="card shadow-lg border-0 rounded-lg mb-5">
+                <div class="card-body p-5" style="background-color: #f8f9fa;">
+                    
+                    <!-- Nom de l'événement -->
+                    <div class="form-group mb-4">
+                        <label class="form-label h5 text-muted">Nom de l'événement :</label>
+                        <p class="form-control form-control-lg border-0 bg-light shadow-sm">{{ evenement.NomEvenement }}</p>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-group mb-4">
+                        <label class="form-label h5 text-muted">Description :</label>
+                        <textarea class="form-control form-control-lg border-0 bg-light shadow-sm" rows="6" disabled>{{ evenement.DescriptionEvenement }}</textarea>
+                    </div>
+
+                    <!-- Type d'événement -->
+                    <div class="form-group mb-4">
+                        <label class="form-label h5 text-muted">Type d'événement :</label>
+                        <p class="form-control form-control-lg border-0 bg-light shadow-sm">{{ evenement.TypeEvenement }}</p>
+                    </div>
+
+                     <div class="form-group mb-4">
+                            <label for="eventImage" class="form-label h5 text-muted">
+                                <i class="fas fa-image"></i> Image de l'événement
+                            </label>
+                            <div class="text-center mt-3">
+                                {% if evenement.ImageEvenement %}
+                                    <img src="{{ asset('uploads/photos/' ~ evenement.ImageEvenement) }}" alt="{{ evenement.NomEvenement }}" class="img-fluid rounded-lg shadow-lg" style="max-height: 400px; width: auto; transition: transform 0.3s;" 
+                                         onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';"/>
+                                {% else %}
+                                    <p class="text-muted">Aucune image disponible pour cet événement.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    <!-- QR Code -->
+                    <div class="form-group mb-4">
+                        <label class="form-label h5 text-muted">QR Code de l'événement :</label>
+                        <div class="text-center mt-3">
+                            <img src="{{ qrCodeData }}" alt="QR Code de {{ evenement.NomEvenement }}" class="img-fluid rounded-lg shadow-lg" style="max-width: 300px;" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

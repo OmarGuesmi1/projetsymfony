@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>{% block title %}Espace Enseignant{% endblock %}</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link
+      rel="icon"
+        href="{{ asset ('enseignant/img/kaiadmin/favicon.ico')}}"
+      type="image/x-icon"
+    />
+
+    <!-- Fonts and icons -->
+    <script src="{{ asset ('enseignant/js/plugin/webfont/webfont.min.js')}}"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: [
+            "Font Awesome 5 Solid",
+            "Font Awesome 5 Regular",
+            "Font Awesome 5 Brands",
+            "simple-line-icons",
+          ],
+         urls: ["{{ asset ('enseignant/css/fonts.min.css')}}"],
+        },
+        active: function () {
+          sessionStorage.fonts = true;
+        },
+      });
+    </script>
+
+    <!-- CSS Files -->
+   <link rel="stylesheet" href="{{ asset ('enseignant/css/bootstrap.min.css')}}" />
+    <link rel="stylesheet" href="{{ asset ('enseignant/css/plugins.min.css')}}" />
+    <link rel="stylesheet" href="{{ asset ('enseignant/css/kaiadmin.min.css')}}" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+   <link rel="stylesheet" href="{{ asset ('enseignant/css/demo.css')}}" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Sidebar -->
+      <div class="sidebar" data-background-color="dark">
+        <div class="sidebar-logo">
+          <!-- Logo Header -->
+          <div class="logo-header" data-background-color="dark">
+            <a href="#" class="logo"> <h4>Espace Enseignant </h4>
+              {# <img src="{{ asset ('enseignant/img/kaiadmin/logo_light.svg')}}" alt="navbar brand" class="navbar-brand" height="20"/> #}
+            </a>
+            <div class="nav-toggle">
+              <button class="btn btn-toggle toggle-sidebar">
+                <i class="gg-menu-right"></i>
+              </button>
+              <button class="btn btn-toggle sidenav-toggler">
+                <i class="gg-menu-left"></i>
+              </button>
+            </div>
+            <button class="topbar-toggler more">
+              <i class="gg-more-vertical-alt"></i>
+            </button>
+          </div>
+          <!-- End Logo Header -->
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+          <div class="sidebar-content">
+            <ul class="nav nav-secondary">
+              <li class="nav-item ">
+        
+
+                <a href="{{ path('app_enseignant') }}"><i class="fas fa-home"></i>Reglement</a></li>
+                
+              </li>
+              <hr>
+              {#*************************************************  #}
+      
+      <!-- Evenement Section -->
+      <li class="nav-item">
+        <a data-bs-toggle="collapse" href="#evenementSection">
+          <i class="fas fa-table"></i>
+          <p>Evenement</p>
+          <span class="caret"></span>
+        </a>
+        <div class="collapse" id="evenementSection">
+          <ul class="nav nav-collapse">
+            <li>
+              <a href="{{ path('app_createevent') }}">
+                <span class="sub-item">Ajouter Evenement</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ path('event_list') }}">
+                <span class="sub-item">List Evenement</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      {# ************************************************** #}
+
+      <li class="nav-item">
+        <a data-bs-toggle="collapse" href="#participantSection">
+           <i class="fas fa-user"></i></i>
+          <p>Participant</p>
+          <span class="caret"></span>
+        </a>
+        <div class="collapse" id="participantSection">
+          <ul class="nav nav-collapse">
+            <li>
+              <a href="{{ path('participant_new') }}">
+                <span class="sub-item">Ajouter Participant</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ path('participant_index') }}">
+                <span class="sub-item">List Participant</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+{# ***************************************************** #}
+      <!-- Reservation Evenement Section -->
+    
+              <li class="nav-item">
+        
+
+                <a href="{{ path('reservation_new') }}"><i class="fas fa-pen-square"></i>Reservation Evenement</a></li>
+                
+              </li>
+
+      <!-- Liste Evenement Section -->
+      <li class="nav-item">
+        <a data-bs-toggle="collapse" href="#omar">
+          <i class="fas fa-table"></i>
+          <p>Liste Evenement</p>
+          <span class="caret"></span>
+        </a>
+        <div class="collapse" id="omar">
+          <ul class="nav nav-collapse">
+            <li>
+              <a href="{{ path('app_reservation_evenement_invalides') }}">
+                <span class="sub-item">Evenement en cours</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ path('app_reservation_evenement_valides') }}">
+                <span class="sub-item">Evenement  validé</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="nav-item ">
+        <a href=""><i class="fas fa-sign-out-alt"></i>Log-Out</a></li>      
+      </li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- End Sidebar -->
+
+      <div class="main-panel">
+        <div class="main-header">
+          <div class="main-header-logo">
+            <!-- Logo Header -->
+            <div class="logo-header" data-background-color="dark">
+              <a href="../index.html" class="logo">
+                <img
+                  src="{{ asset ('enseignant/img/kaiadmin/logo_light.svg')}}"
+                  alt="navbar brand"
+                  class="navbar-brand"
+                />
+              </a>
+              <div class="nav-toggle">
+                <button class="btn btn-toggle toggle-sidebar">
+                  <i class="gg-menu-right"></i>
+                </button>
+                <button class="btn btn-toggle sidenav-toggler">
+                  <i class="gg-menu-left"></i>
+                </button>
+              </div>
+              <button class="topbar-toggler more">
+                <i class="gg-more-vertical-alt"></i>
+              </button>
+            </div>
+            <!-- End Logo Header -->
+          </div>
+          <!-- Navbar Header -->
+          <nav
+            class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
+          >
+            <div class="container-fluid">
+             
+
+              <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+                <li
+                  class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none"
+                >
+                  <a
+                    class="nav-link dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    href="#"
+                    role="button"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                  >
+                    <i class="fa fa-search"></i>
+                  </a>
+                  <ul class="dropdown-menu dropdown-search animated fadeIn">
+                    <form class="navbar-left navbar-form nav-search">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          placeholder="Search ..."
+                          class="form-control"
+                        />
+                      </div>
+                    </form>
+                  </ul>
+                </li>
+                
+
+                <li class="nav-item topbar-user dropdown hidden-caret">
+                  <a
+                    class="dropdown-toggle profile-pic"
+                    data-bs-toggle="dropdown"
+                    href="#"
+                    aria-expanded="false"
+                  >
+                    <div class="avatar-sm">
+                      <img
+                        src="{{ asset ('enseignant/img/profile.jpg')}}"
+                        alt="..."
+                        class="avatar-img rounded-circle"
+                      />
+                    </div>
+                    <span class="profile-username">
+                      <span class="op-7">Hi,</span>
+                      <span class="fw-bold">Hizrian</span>
+                    </span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-user animated fadeIn">
+                    <div class="dropdown-user-scroll scrollbar-outer">
+                      <li>
+                        <div class="user-box">
+                          <div class="avatar-lg">
+                            <img
+                              src="{{ asset ('enseignant/img/profile.jpg')}}"
+                              alt="image profile"
+                              class="avatar-img rounded"
+                            />
+                          </div>
+                          <div class="u-text">
+                            <h4>Hizrian</h4>
+                            <p class="text-muted">hello@example.com</p>
+                          
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="">Profile Setting</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Logout</a>
+                      </li>
+                    </div>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <!-- End Navbar -->
+        </div>
+
+        <div class="container">
+          <div class="page-inner">
+            
+            {% block body %}
+             <style>
+  body {
+    background: linear-gradient(to bottom right, #e3f2fd, #ffffff);
+    font-family: 'Segoe UI', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+
+  .reglement-container {
+    max-width: 800px; /* Reduced width */
+    margin: 40px auto; /* Reduced margin */
+    padding: 30px; /* Reduced padding */
+    background: #ffffff;
+    border-radius: 15px; /* Slightly smaller rounding */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); /* Softer shadow */
+    animation: fadeInScale 0.8s ease-out;
+  }
+
+  .reglement-container h1 {
+    color: #0069d9;
+    font-size: 2.5rem; /* Smaller font size */
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 20px; /* Reduced margin */
+    letter-spacing: 1.2px; /* Slightly tighter spacing */
+    background: linear-gradient(to right, #007bff, #00c6ff);
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .reglement-container p {
+    text-align: center;
+    font-size: 1.2rem; /* Smaller font size */
+    color: #555;
+    margin-bottom: 30px; /* Reduced margin */
+  }
+
+  .reglement-section {
+    margin-bottom: 25px; /* Reduced section spacing */
+  }
+
+  .reglement-section h3 {
+    color: #495057;
+    font-size: 1.5rem; /* Smaller font size */
+    margin-bottom: 15px; /* Reduced margin */
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  .reglement-section h3::before {
+    content: "⭐";
+    font-size: 1.5rem; /* Smaller icon size */
+    margin-right: 10px;
+    color: #f39c12;
+  }
+
+  .reglement-section ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .reglement-section ul li {
+    background: #f1f5f9;
+    padding: 15px; /* Reduced padding */
+    margin-bottom: 15px; /* Reduced margin */
+    border-radius: 10px; /* Slightly smaller rounding */
+    position: relative;
+    font-size: 1rem; /* Smaller font size */
+    display: flex;
+    align-items: center;
+    transition: all 0.3s;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.05); /* Softer shadow */
+    cursor: pointer;
+  }
+
+  .reglement-section ul li:hover {
+    transform: translateX(8px); /* Slightly less movement */
+    background: #eaf4fb;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08); /* Softer hover effect */
+  }
+
+  .reglement-section ul li::before {
+    content: "✔️";
+    font-size: 1.2rem; /* Smaller icon size */
+    margin-right: 15px;
+    color: #28a745;
+    animation: fadeIn 0.8s ease-in-out;
+  }
+
+  .reglement-tips {
+    background: linear-gradient(to right, #e3f7ff, #ffffff);
+    border-left: 4px solid #00c6ff; /* Reduced border size */
+    border-radius: 10px; /* Slightly smaller rounding */
+    padding: 20px; /* Reduced padding */
+    margin-top: 40px; /* Reduced margin */
+    animation: slideInFromLeft 0.8s ease-in-out;
+  }
+
+  .reglement-tips h4 {
+    color: #17a2b8;
+    font-size: 1.4rem; /* Smaller font size */
+    margin-bottom: 10px; /* Reduced margin */
+    display: flex;
+    align-items: center;
+  }
+
+  .reglement-tips h4::before {
+    content: "💡";
+    font-size: 1.5rem; /* Smaller icon size */
+    margin-right: 8px;
+  }
+
+  .btn-back {
+    display: inline-block;
+    margin: 40px auto 0; /* Reduced margin */
+    background: linear-gradient(to right, #007bff, #00c6ff);
+    color: #ffffff;
+    padding: 10px 30px; /* Reduced padding */
+    border: none;
+    border-radius: 25px; /* Smaller rounding */
+    font-size: 1.2rem; /* Smaller font size */
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 10px 20px rgba(0, 123, 255, 0.3); /* Softer shadow */
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-back:hover {
+    background: linear-gradient(to right, #0056b3, #007bff);
+    box-shadow: 0 15px 25px rgba(0, 123, 255, 0.4); /* Softer hover effect */
+    transform: translateY(-4px);
+  }
+
+  .btn-back:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 250%;
+    height: 250%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%) rotate(45deg);
+    transition: all 0.4s ease;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .btn-back:hover:before {
+    opacity: 1;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Keyframes */
+  @keyframes fadeInScale {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes slideInFromLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+</style>
+
+<body>
+  <div class="reglement-container">
+    <h1>Bienvenue dans BiblioNet 📚</h1>
+    <p>Voici les règles et recommandations à suivre pour une gestion efficace et responsable des événements dans la bibliothèque. 🌟</p>
+
+    <!-- Section 1: Règlements de base -->
+    <div class="reglement-section">
+      <h3>Règlements de Base ⚖️</h3>
+      <ul>
+        <li>📅 <span>Les événements doivent être planifiés au moins <strong>7 jours</strong> à l'avance.</span></li>
+        <li>✔️ <span>Chaque événement doit être approuvé par l'administration avant sa publication.</span></li>
+        <li>📝 <span>Les descriptions des événements doivent être claires et adaptées à tous les publics.</span></li>
+        <li>🚫 <span>Les modifications ou annulations doivent être signalées au moins <strong>48 heures</strong> avant l'événement.</span></li>
+        <li>🚪 <span>Le non-respect de ces règles peut entraîner des restrictions d'accès.</span></li>
+      </ul>
+    </div>
+
+    <!-- Tips Section -->
+    <div class="reglement-tips">
+      <h4>Conseils Pratiques 📝</h4>
+      <p>Pour assurer le bon déroulement des événements, pensez à toujours informer les participants en avance et à respecter les horaires convenus. Un bon événement est un événement bien organisé ! 🎯</p>
+    </div>
+  </div>
+</body>
+{% endblock %}
+        
+      </div>
+
+      <!-- Custom template | don't include it in your project! -->
+      <div class="custom-template">
+        <div class="title">Settings</div>
+        <div class="custom-content">
+          <div class="switcher">
+            <div class="switch-block">
+              <h4>Logo Header</h4>
+              <div class="btnSwitch">
+                <button
+                  type="button"
+                  class="selected changeLogoHeaderColor"
+                  data-color="dark"
+                ></button>
+                <button
+                  type="button"
+                  class="selected changeLogoHeaderColor"
+                  data-color="blue"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="purple"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="light-blue"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="green"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="orange"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="red"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="white"
+                ></button>
+                <br />
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="dark2"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="blue2"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="purple2"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="light-blue2"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="green2"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="orange2"
+                ></button>
+                <button
+                  type="button"
+                  class="changeLogoHeaderColor"
+                  data-color="red2"
+                ></button>
+              </div>
+            </div>
+            <div class="switch-block">
+              <h4>Navbar Header</h4>
+              <div class="btnSwitch">
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="dark"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="blue"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="purple"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="light-blue"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="green"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="orange"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="red"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="white"
+                ></button>
+                <br />
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="dark2"
+                ></button>
+                <button
+                  type="button"
+                  class="selected changeTopBarColor"
+                  data-color="blue2"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="purple2"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="light-blue2"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="green2"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="orange2"
+                ></button>
+                <button
+                  type="button"
+                  class="changeTopBarColor"
+                  data-color="red2"
+                ></button>
+              </div>
+            </div>
+            <div class="switch-block">
+              <h4>Sidebar</h4>
+              <div class="btnSwitch">
+                <button
+                  type="button"
+                  class="selected changeSideBarColor"
+                  data-color="white"
+                ></button>
+                <button
+                  type="button"
+                  class="changeSideBarColor"
+                  data-color="dark"
+                ></button>
+                <button
+                  type="button"
+                  class="changeSideBarColor"
+                  data-color="dark2"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="custom-toggle">
+          <i class="icon-settings"></i>
+        </div>
+      </div>
+      <!-- End Custom template -->
+    </div>
+   {% block javascripts %}
+    <!--   Core JS Files   -->
+     <script src="{{ asset ('enseignant/js/core/jquery-3.7.1.min.js')}}"></script>
+    <script src="{{ asset ('enseignant/js/core/popper.min.js')}}"></script>
+    <script src="{{ asset ('enseignant/js/core/bootstrap.min.js')}}"></script>
+
+   <!-- jQuery Scrollbar -->
+    <script src="{{ asset ('enseignant/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
+
+    <!-- Chart JS -->
+    <script src="{{ asset ('enseignant/js/plugin/chart.js/chart.min.js')}}"></script>
+
+    <!-- jQuery Sparkline -->
+    <script src="{{ asset ('enseignant/js/plugin/jquery.sparkline/jquery.sparkline.min.js')}}"></script>
+
+    <!-- Chart Circle -->
+    <script src="{{ asset ('enseignant/js/plugin/chart-circle/circles.min.js')}}"></script>
+
+    <!-- Datatables -->
+    <script src="{{ asset ('enseignant/js/plugin/datatables/datatables.min.js')}}"></script>
+
+    <!-- Bootstrap Notify -->
+    <script src="{{ asset ('enseignant/js/plugin/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
+
+    <!-- jQuery Vector Maps -->
+    <script src="{{ asset ('enseignant/js/plugin/jsvectormap/jsvectormap.min.js')}}"></script>
+    <script src="{{ asset ('enseignant/js/plugin/jsvectormap/world.js')}}"></script>
+
+    <!-- Sweet Alert -->
+    <script src="{{ asset ('enseignant/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="{{ asset ('enseignant/js/kaiadmin.min.js')}}"></script>
+
+    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+    <script src="{{ asset ('enseignant/js/setting-demo2.js')}}"></script>
+    {% endblock %}
+    
+  </body>
+  
+</html>

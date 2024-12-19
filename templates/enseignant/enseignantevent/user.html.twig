@@ -1,0 +1,136 @@
+{% extends 'enseignant/enseignatevent.html.twig' %}
+
+{% block title %}Modifier l'utilisateur{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <!-- Titre principal -->
+    <h1 class="text-center mb-5 text-primary fw-bold display-4">
+        <i class="fas fa-user-edit"></i> Modifier l'utilisateur : <span class="text-dark">{{ user.nom ~ ' ' ~ user.prenom }}</span>
+    </h1>
+
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+        <div class="row g-0">
+            <!-- Colonne Image -->
+            <div class="col-lg-4 bg-primary d-flex align-items-center justify-content-center" style="min-height: 400px;">
+                <div class="text-center">
+                    <i class="fas fa-user-circle text-white display-1"></i>
+                    <p class="text-white mt-3 fs-5">Mettez à jour les informations personnelles.</p>
+                </div>
+            </div>
+
+            <!-- Colonne Formulaire -->
+            <div class="col-lg-8 p-5 bg-light">
+                <form method="post" enctype="multipart/form-data" id="editUserForm">
+                    {{ form_start(form) }}
+
+                    <!-- Nom -->
+                    <div class="form-group mb-4">
+                        <label for="nom" class="h5 text-primary">
+                            <i class="fas fa-font"></i> {{ form_label(form.nom) }}
+                        </label>
+                        {{ form_widget(form.nom, {
+                            'attr': {
+                                'class': 'form-control form-control-lg rounded-pill',
+                                'placeholder': 'Nom',
+                                'style': 'box-shadow: none;'
+                            }
+                        }) }}
+                    </div>
+
+                    <!-- Prénom -->
+                    <div class="form-group mb-4">
+                        <label for="prenom" class="h5 text-primary">
+                            <i class="fas fa-font"></i> {{ form_label(form.prenom) }}
+                        </label>
+                        {{ form_widget(form.prenom, {
+                            'attr': {
+                                'class': 'form-control form-control-lg rounded-pill',
+                                'placeholder': 'Prénom',
+                                'style': 'box-shadow: none;'
+                            }
+                        }) }}
+                    </div>
+
+                    <!-- Téléphone -->
+                    <div class="form-group mb-4">
+                        <label for="telephone" class="h5 text-primary">
+                            <i class="fas fa-phone"></i> {{ form_label(form.telephone) }}
+                        </label>
+                        {{ form_widget(form.telephone, {
+                            'attr': {
+                                'class': 'form-control form-control-lg rounded-pill',
+                                'placeholder': 'Téléphone',
+                                'style': 'box-shadow: none;'
+                            }
+                        }) }}
+                    </div>
+
+                    <!-- Photo -->
+                    <div class="form-group mb-4">
+                        <label for="photo" class="h5 text-primary">
+                            <i class="fas fa-image"></i> Photo de l'utilisateur
+                        </label>
+                        <div class="custom-file">
+                            {{ form_widget(form.photo, {
+                                'attr': {
+                                    'class': 'custom-file-input',
+                                    'onchange': 'previewImage(event)'
+                                }
+                            }) }}
+                            <label class="custom-file-label rounded-pill shadow-sm" for="photo">
+                                {{ user.photo ? user.photo : 'Choisir une image' }}
+                            </label>
+                        </div>
+                        <small class="form-text text-muted">Laissez vide pour conserver l'ancienne photo.</small>
+
+                        <!-- Aperçu de la photo -->
+                        <div id="imagePreviewContainer" class="text-center mt-4" style="display: {{ user.photo ? 'block' : 'none' }};">
+                            <img id="imagePreview" src="{{ asset('uploads/photos/' ~ user.photo) }}" alt="Aperçu de la photo"
+                                 class="img-fluid rounded shadow-sm border" style="max-height: 200px; object-fit: contain;">
+                        </div>
+                    </div>
+
+                    <!-- Bouton de soumission -->
+                    <div class="form-group text-center mt-5">
+                        <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm px-5 py-3">
+                            <i class="fas fa-save me-2"></i> Mettre à jour l'utilisateur
+                        </button>
+                    </div>
+
+                    {{ form_end(form) }}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script>
+    // Réinitialiser le formulaire et l'aperçu de l'image lors du rechargement
+    window.addEventListener('load', function() {
+        const form = document.getElementById('editUserForm');
+        if (form) form.reset();
+
+        const previewContainer = document.getElementById('imagePreviewContainer');
+        const imagePreview = document.getElementById('imagePreview');
+        if (previewContainer && imagePreview && imagePreview.src === '') {
+            previewContainer.style.display = 'none';
+        }
+    });
+
+    // Aperçu dynamique de l'image
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            const previewContainer = document.getElementById('imagePreviewContainer');
+            const imagePreview = document.getElementById('imagePreview');
+            if (previewContainer && imagePreview) {
+                imagePreview.src = reader.result;
+                previewContainer.style.display = 'block';
+            }
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+{% endblock %}

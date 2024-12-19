@@ -1,0 +1,173 @@
+{% extends 'evenement.html.twig' %}
+
+{% block body %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh; background: #f3f4f6;">
+    <!-- Contenu principal sous forme de carte -->
+    <div class="card shadow-lg border-0 rounded-lg animate-card mb-5" 
+         style="width: 100%; max-width: 700px; padding: 30px; background: linear-gradient(to bottom right, #ffffff, #f9f9f9); border-radius: 20px; margin-left: 250px;">
+        <div class="card-body p-4">
+            <!-- En-tête avec image -->
+            <div class="text-center mb-4 header-section animate-fade-in" 
+                 style="background: linear-gradient(rgba(63, 81, 181, 0.9), rgba(63, 81, 181, 0.9)), url('{{ asset("uploads/backgrounds/event.jpg") }}') center/cover no-repeat; 
+                        padding: 30px; color: #fff; border-radius: 15px;">
+                <h1 class="display-4 fw-bold" style="letter-spacing: 1px; animation: fade-in 1s ease; font-size: 2.5rem;">🎉 {{ evenement.NomEvenement }} 🎊</h1>
+            </div>
+            <hr>
+
+            <!-- Image de l'événement -->
+            <div class="text-center mb-4">
+                {% if evenement.ImageEvenement %}
+                    <img src="{{ asset('uploads/photos/' ~ evenement.ImageEvenement) }}" 
+                         alt="{{ evenement.NomEvenement }}" 
+                         class="img-fluid rounded-lg shadow-sm hover-scale" 
+                         style="max-height: 500px; max-width: 100%; object-fit: cover; transition: transform 0.3s;" />
+                {% else %}
+                    <p class="text-muted" style="font-size: 1.2rem;">Aucune image disponible pour cet événement.</p>
+                {% endif %}
+            </div>
+
+            <!-- Informations détaillées -->
+            <div class="mb-4">
+                <h2 class="text-primary text-center mb-3" style="font-size: 1.8rem;">📋 Détails</h2>
+                <hr class="mb-3">
+
+                <!-- Nom de l'événement -->
+                <div class="form-group mb-3 animate-fade-in">
+                    <label class="form-label text-muted small" style="font-size: 1.2rem;">📌 Nom :</label>
+                    <div class="info-box bg-light p-3 rounded-lg text-center shadow-sm" style="font-size: 1.5rem;">
+                        {{ evenement.NomEvenement }}
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group mb-3 animate-fade-in">
+                    <label class="form-label text-muted small" style="font-size: 1.2rem;">📝 Description :</label>
+                    <div class="info-box bg-light p-3 rounded-lg shadow-sm" style="font-size: 1.2rem; white-space: pre-wrap;">
+                        {{ evenement.DescriptionEvenement }}
+                    </div>
+                </div>
+
+                <!-- Type d'événement -->
+                <div class="form-group mb-3 animate-fade-in">
+                    <label class="form-label text-muted small" style="font-size: 1.2rem;">🎭 Type :</label>
+                    <div class="info-box bg-light p-3 rounded-lg text-center shadow-sm" style="font-size: 1.2rem;">
+                        {{ evenement.TypeEvenement }}
+                    </div>
+                </div>
+
+                <!-- Dates de réservation -->
+                <div class="form-group mb-3 animate-fade-in">
+                    <label class="form-label text-muted small" style="font-size: 1.2rem;">📅 Date de début de réservation :</label>
+                    <div class="info-box bg-light p-3 rounded-lg text-center shadow-sm" style="font-size: 1.5rem;">
+                        {% if reservation and reservation.DateDebutRE %}
+                            {{ reservation.DateDebutRE|date('d/m/Y H:i') }}
+                        {% else %}
+                            Non définie
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group mb-3 animate-fade-in">
+                    <label class="form-label text-muted small" style="font-size: 1.2rem;">⏰ Date de fin de réservation :</label>
+                    <div class="info-box bg-light p-3 rounded-lg text-center shadow-sm" style="font-size: 1.5rem;">
+                        {% if reservation and reservation.DateFinRE %}
+                            {{ reservation.DateFinRE|date('d/m/Y H:i') }}
+                            <p id="countdown" style="font-size: 1.5rem; color: #ff0000; font-weight: bold;"></p>
+                        {% else %}
+                            Non définie
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Script JavaScript pour le compteur -->
+                <script>
+                    var dateDebReservation = "{{ reservation.DateDebutRE ? reservation.DateDebutRE|date('c') : '' }}";
+                    
+                    if (dateDebReservation) {
+                        var countDownDate = new Date(dateDebReservation).getTime();
+
+                        // Mettre à jour le compteur toutes les secondes
+                        var x = setInterval(function() {
+                            // Obtenir la date et l'heure actuelles
+                            var now = new Date().getTime();
+
+                            // Calculer la distance entre maintenant et la date de fin
+                            var distance = countDownDate - now;
+
+                            // Calculer le temps restant en jours, heures, minutes et secondes
+                            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                            // Afficher le temps restant dans l'élément HTML
+                            document.getElementById("countdown").innerHTML = days + "j " + hours + "h " + minutes + "m " + seconds + "s ";
+
+                            // Si le compte à rebours a expiré, afficher un message
+                            if (distance < 0) {
+                                clearInterval(x);
+                                document.getElementById("countdown").innerHTML = "Temps écoulé";
+                            }
+                        }, 1000);
+                    } else {
+                        document.getElementById("countdown").innerHTML = "Date non définie";
+                    }
+                </script>
+            </div>
+
+            <!-- QR Code -->
+            <div class="form-group text-center">
+                <h2 class="text-primary text-center mb-3" style="font-size: 1.8rem;">📱 QR Code</h2>
+                <div class="p-4 rounded-lg" style="background: #e3f2fd; display: inline-block; border: 5px solid #42a5f5;">
+                    <img src="{{ qrCodeData }}" alt="QR Code de {{ evenement.NomEvenement }}" 
+                         class="img-fluid rounded-lg hover-scale" 
+                         style="max-width: 180px; max-height: 180px; transition: transform 0.3s;" />
+                </div>
+            </div>
+
+            <!-- Bouton Réservation -->
+            <div class="text-center mt-4">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Style personnalisé -->
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f3f4f6;
+    }
+
+    .info-box {
+        font-size: 1.5rem;
+        font-weight: 500;
+        text-align: center;
+    }
+
+    h1, h2 {
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    #countdown {
+        animation: pulse 1s infinite;
+    }
+
+    @keyframes fade-in {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-card { animation: fade-in 1s ease; }
+
+    .hover-scale:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); }
+
+    img, .card { transition: all 0.3s ease-in-out; }
+
+    @keyframes pulse {
+        0%, 100% { color: #ff0000; }
+        50% { color: #ff6347; }
+    }
+</style>
+{% endblock %}

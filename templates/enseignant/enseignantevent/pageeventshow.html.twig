@@ -1,0 +1,127 @@
+{% extends 'evenement.html.twig' %}
+
+{% block body %}
+<div class="container mt-5">
+    <!-- Titre principal -->
+    <h1 class="text-center mb-5 text-primary fw-bold">
+        <i class="fas fa-calendar-alt"></i> Explorez Nos Événements
+    </h1>
+
+    <!-- Formulaire de recherche et filtre -->
+    <form method="get" action="{{ path('showevent') }}" class="mb-5">
+        <div class="row justify-content-center g-3">
+            <!-- Barre de recherche -->
+            <div class="col-md-6 col-lg-4">
+                <div class="input-group shadow-sm">
+                    <input type="text" name="search" class="form-control form-control-lg" 
+                           placeholder="Rechercher un événement..." value="{{ app.request.get('search') }}">
+                </div>
+            </div>
+
+            <!-- Filtre par type d'événement -->
+            <div class="col-md-4 col-lg-3">
+                <select name="type" class="form-select form-select-lg shadow-sm">
+                    <option value="">Tous les types</option>
+                    {% for type in types %}
+                        <option value="{{ type }}" {{ app.request.get('type') == type ? 'selected' : '' }}>
+                            {{ type }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Recherche automatique au changement -->
+            <script>
+                document.querySelectorAll('input[name="search"], select[name="type"]').forEach(element => {
+                    element.addEventListener('input', () => element.form.submit());
+                });
+            </script>
+        </div>
+    </form>
+
+    <hr>
+
+    <!-- Liste des événements -->
+    <div class="row g-4">
+        {% if evenements is empty %}
+            <div class="col-12">
+                <p class="text-center text-muted fs-4">Aucun événement trouvé pour cette recherche.</p>
+            </div>
+        {% else %}
+            {% for evenement in evenements %}
+                <div class="col-md-6 col-lg-4">
+                    <!-- Carte d'événement -->
+                    <div class="card shadow-lg border-0 h-100">
+                        <!-- Image de l'événement -->
+                        {% if evenement.ImageEvenement %}
+                            <img src="{{ asset('uploads/photos/' ~ evenement.ImageEvenement) }}" 
+                                 alt="Image de l'événement" 
+                                 class="card-img-top" 
+                                 style="object-fit: cover; height: 220px; margin-left: 70px">
+                        {% else %}
+                            <div class="card-img-top d-flex align-items-center justify-content-center text-muted bg-light" 
+                                 style="height: 220px;">Pas d'image disponible</div>
+                        {% endif %}
+
+                        <!-- Bouton sous l'image -->
+                        <div class="d-grid mt-3">
+                            <a href="{{ path('showeventid', { id: evenement.id }) }}" 
+                               class="btn btn-info btn-lg d-flex align-items-center justify-content-center">
+                                Voir Détails
+                            </a>
+                        </div>
+
+                        <!-- Contenu de la carte -->
+                        <div class="card-body">
+                            <h5 class="card-title text-primary fw-bold mb-3">
+                                {{ evenement.NomEvenement }}
+                            </h5>
+                            <p class="card-text text-muted mb-2">
+                                <strong>Type :</strong> {{ evenement.TypeEvenement }}
+                            </p>
+                            <p class="card-text text-truncate" title="{{ evenement.DescriptionEvenement }}">
+                                {{ evenement.DescriptionEvenement }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+<!-- Styles personnalisés -->
+<style>
+    .form-select {
+        border-radius: 12px;
+        font-size: 1.2rem;
+    }
+
+    .input-group input {
+        border-radius: 12px;
+        font-size: 1.2rem;
+        padding: 15px;
+    }
+
+    .card {
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .card-img-top {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .btn-lg {
+        font-size: 1.1rem;
+        padding: 12px 20px;
+    }
+
+    .d-grid a {
+        margin-top: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 90%;
+    }
+</style>
+{% endblock %}

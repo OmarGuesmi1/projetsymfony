@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"    content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author"      content="Sergey Pozhilov (GetTemplate.com)">
+	
+	<title>About - Progressus Bootstrap template</title>
+
+    <link rel="shortcut icon" href="{{ asset('images/gt_favicon.png') }}">
+
+	
+	<link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+
+
+	<!-- Custom styles for our template -->
+	<link rel="stylesheet" href="{{ asset('css/bootstrap-theme.css') }}" media="screen">
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+
+
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	<script src="assets/js/html5shiv.js"></script>
+	<script src="assets/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+	<!-- Fixed navbar -->
+	<div class="navbar navbar-inverse navbar-fixed-top headroom" >
+		<div class="container">
+			<div class="navbar-header">
+				<!-- Button for smallest screens -->
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                <a class="navbar-brand" href="{{ path('app_test') }}">
+                    <img src="{{ asset('images/logo.png') }}" alt="Progressus HTML5 template">
+                </a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav pull-right">
+					<li><a href="{{ path('app_test') }}">Home</a></li>
+					<li class="active"><a href="#">About</a></li>
+					<li><a href="{{ path('contact') }}">Contact</a></li>
+					<li><a href="{{ path('livres_show') }}">Livres</a></li>
+					<li><a href="{{ path('showevent') }}">Evenement</a></li>
+					<li><a class="btn" href="{{ path('singn_in') }}">SIGN IN / SIGN UP</a></li>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div>
+	</div> 
+	<!-- /.navbar -->
+
+	<header id="head" class="secondary"></header>
+
+	<!-- container -->
+	<div class="container">
+
+		<ol class="breadcrumb">
+			<li><a href="{{ path('app_test') }}">Home</a></li>
+			<li class="active">About</li>
+		</ol>
+
+		<div class="row">
+			
+			<!-- Article main content -->
+			<article class="col-sm-8 maincontent">
+				<header class="page-header">
+					<h1 class="page-title">À propos</h1>
+				</header>
+				<h3>BiblioNet</h3>
+				<p><img src="{{ asset('images/mac.jpg') }}" alt="" class="img-rounded pull-right" width="300" > BiblioNet est bien plus qu’une simple plateforme de réservation de livres. C’est un véritable espace dédié à la culture, à la lecture et à l’échange. Nous avons conçu cette application dans le but de rendre l’accès aux livres plus facile, rapide et personnalisé pour tous les utilisateurs, qu’ils soient étudiants, professionnels ou simplement passionnés de lecture. Avec BiblioNet, réserver un livre n'a jamais été aussi simple.
+
+                Notre plateforme vous permet de découvrir une grande variété d'ouvrages, de vérifier leur disponibilité en temps réel et de les réserver directement depuis votre appareil. Que vous cherchiez à emprunter un roman, un livre technique, une biographie ou un livre jeunesse, vous trouverez ce que vous cherchez dans notre large catalogue, régulièrement mis à jour pour offrir toujours plus de choix à nos utilisateurs.</p>
+				<h3>Nos services </h3>
+				<h4>1 - Réservation de livres en ligne</h4>
+				<p>BiblioNet vous offre un accès instantané à un vaste catalogue de livres, vous permettant de réserver facilement vos titres préférés. Plus besoin de vous déplacer en bibliothèque : vous pouvez consulter la disponibilité des livres et réserver directement en ligne, à tout moment de la journée.</p>
+				<h4>2 - Événements et clubs de lecture</h4>
+				<p>Chez BiblioNet, nous croyons que la lecture est encore plus enrichissante lorsqu’elle est partagée. C’est pourquoi nous organisons régulièrement des événements, des clubs de lecture et des rencontres avec des auteurs. Participez à nos activités pour échanger vos impressions, rencontrer d'autres passionnés et plonger plus profondément dans l'univers des livres.Événements et clubs de lecture</p>
+				<h4>3 - Sécurité et confidentialité</h4>
+				<p>La sécurité de vos informations est notre priorité. Nous appliquons des normes de sécurité strictes pour protéger vos données personnelles et garantir que vos informations sont en sécurité. Vous pouvez ainsi profiter de notre service en toute confiance.</p>
+				<h3>Notre mission </h3>
+				<p>Chez BiblioNet, notre mission est d’apporter la lecture à portée de main pour tous, qu’ils soient étudiants, professionnels ou passionnés. Nous croyons que la lecture enrichit la vie, nourrit l’esprit et ouvre l’imagination. C’est pourquoi nous nous engageons à rendre la bibliothèque numérique plus accessible, pratique et adaptée aux besoins de chacun</p>
+				<h3>Rejoignez-nous ! </h3>
+				<p>Si vous êtes un amateur de lecture, un étudiant cherchant des ressources pour ses études, ou un passionné d'événements littéraires, BiblioNet est fait pour vous. Rejoignez notre communauté dès aujourd'hui et explorez un monde de livres et de connaissances à portée de cli</p>
+				
+
+			</article>
+			<!-- /Article -->
+			
+			<!-- Sidebar -->
+			<aside class="col-sm-4 sidebar sidebar-right">
+
+				
+
+			</aside>
+			<!-- /Sidebar -->
+
+		</div>
+	</div>	<!-- /container -->
+	
+
+	<footer id="footer" class="top-space">
+
+		<div class="footer1">
+			<div class="container">
+				<div class="row">
+					
+					<div class="col-md-3 widget">
+						<h3 class="widget-title">Contact</h3>
+						<div class="widget-body">
+							<p>+216 28.132.223<br>
+								<a href="mailto:#">biblionet@esprit.tn</a><br>
+								<br>
+								1, 2 rue André Ampère - 2083 - Pôle Technologique - El Ghazala.
+							</p>	
+						</div>
+					</div>
+
+					<div class="col-md-3 widget">
+						<h3 class="widget-title">Follow me</h3>
+						<div class="widget-body">
+							<p class="follow-me-icons clearfix">
+								<a href=""><i class="fa fa-twitter fa-2"></i></a>
+								<a href=""><i class="fa fa-dribbble fa-2"></i></a>
+								<a href=""><i class="fa fa-github fa-2"></i></a>
+								<a href=""><i class="fa fa-facebook fa-2"></i></a>
+							</p>	
+						</div>
+					</div>
+
+					
+
+				</div> <!-- /row of widgets -->
+			</div>
+		</div>
+
+		<div class="footer2">
+			<div class="container">
+				<div class="row">
+					
+					<div class="col-md-6 widget">
+						<div class="widget-body">
+							<p class="simplenav">
+								<a href="{{ path('app_test') }}">Home</a> | 
+								<a href="#">About</a> |
+								<a href="{{ path('contact') }}">Contact</a> |
+								<a href="{{ path('livres_show') }}">Livres</a> |
+								<b><a href="{{ path('singn_up') }}">Sign up</a></b>
+							</p>
+						</div>
+					</div>
+
+					<div class="col-md-6 widget">
+						<div class="widget-body">
+							<p class="text-right">
+								Copyright &copy; 2024,  Designed by <a href="#" rel="designer">DEV-CORE</a> 
+							</p>
+						</div>
+					</div>
+
+				</div> <!-- /row of widgets -->
+			</div>
+		</div>
+	</footer>	
+		
+
+
+
+
+	<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+	<script src="{{ asset('js/headroom.min.js') }}"></script>
+    <script src="{{ asset('js/jQuery.headroom.min.js') }}"></script>
+    <script src="{{ asset('js/template.js') }}"></script>
+
+</body>
+</html>

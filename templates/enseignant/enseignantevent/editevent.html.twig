@@ -1,0 +1,136 @@
+{% extends 'enseignant/enseignatevent.html.twig' %}
+
+{% block title %}Modifier l'événement{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <!-- Titre principal -->
+    <h1 class="text-center mb-5 text-primary fw-bold display-4">
+        <i class="fas fa-edit"></i> Modifier l'événement : <span class="text-dark">{{ evenement.NomEvenement }}</span>
+    </h1>
+
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+        <div class="row g-0">
+            <!-- Colonne Image -->
+            <div class="col-lg-4 bg-primary d-flex align-items-center justify-content-center" style="min-height: 400px;">
+                <div class="text-center">
+                    <i class="fas fa-calendar-alt text-white display-1"></i>
+                    <p class="text-white mt-3 fs-5">Ajoutez une touche unique à votre événement.</p>
+                </div>
+            </div>
+
+            <!-- Colonne Formulaire -->
+            <div class="col-lg-8 p-5 bg-light">
+                <form method="post" enctype="multipart/form-data" id="editEventForm">
+                    {{ form_start(form) }}
+
+                    <!-- Nom de l'événement -->
+                    <div class="form-group mb-4">
+                        <label for="NomEvenement" class="h5 text-primary">
+                            <i class="fas fa-font"></i> {{ form_label(form.NomEvenement) }}
+                        </label>
+                        {{ form_widget(form.NomEvenement, {
+                            'attr': {
+                                'class': 'form-control form-control-lg rounded-pill',
+                                'placeholder': 'Nom de l\'événement',
+                                'style': 'box-shadow: none;'
+                            }
+                        }) }}
+                    </div>
+
+                    <!-- Description de l'événement -->
+                    <div class="form-group mb-4">
+                        <label for="DescriptionEvenement" class="h5 text-primary">
+                            <i class="fas fa-align-left"></i> {{ form_label(form.DescriptionEvenement) }}
+                        </label>
+                        {{ form_widget(form.DescriptionEvenement, {
+                            'attr': {
+                                'class': 'form-control rounded-3',
+                                'rows': 5,
+                                'placeholder': 'Description de l\'événement',
+                                'style': 'box-shadow: none; resize: none;'
+                            }
+                        }) }}
+                    </div>
+
+                    <!-- Type d'événement -->
+                    <div class="form-group mb-4">
+                        <label for="TypeEvenement" class="h5 text-primary">
+                            <i class="fas fa-tags"></i> {{ form_label(form.TypeEvenement) }}
+                        </label>
+                        {{ form_widget(form.TypeEvenement, {
+                            'attr': {
+                                'class': 'form-select form-select-lg rounded-pill',
+                                'style': 'box-shadow: none;'
+                            }
+                        }) }}
+                    </div>
+
+                    <!-- Image de l'événement -->
+                    <div class="form-group mb-4">
+                        <label for="ImageEvenement" class="h5 text-primary">
+                            <i class="fas fa-image"></i> Image de l'événement
+                        </label>
+                        <div class="custom-file">
+                            {{ form_widget(form.ImageEvenement, {
+                                'attr': {
+                                    'class': 'custom-file-input',
+                                    'onchange': 'previewImage(event)'
+                                }
+                            }) }}
+                            <label class="custom-file-label rounded-pill shadow-sm" for="ImageEvenement">
+                                {{ evenement.ImageEvenement ? evenement.ImageEvenement : 'Choisir une image' }}
+                            </label>
+                        </div>
+                        <small class="form-text text-muted">Laissez vide pour conserver l'ancienne image.</small>
+
+                        <!-- Aperçu de l'image -->
+                        <div id="imagePreviewContainer" class="text-center mt-4" style="display: {{ evenement.ImageEvenement ? 'block' : 'none' }};">
+                            <img id="imagePreview" src="{{ asset('uploads/photos/' ~ evenement.ImageEvenement) }}" alt="Aperçu de l'image"
+                                 class="img-fluid rounded shadow-sm border" style="max-height: 200px; object-fit: contain;">
+                        </div>
+                    </div>
+
+                    <!-- Bouton de soumission -->
+                    <div class="form-group text-center mt-5">
+                        <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm px-5 py-3">
+                            <i class="fas fa-save me-2"></i> Mettre à jour l'événement
+                        </button>
+                    </div>
+
+                    {{ form_end(form) }}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script>
+    // Réinitialiser le formulaire et l'aperçu de l'image lors du rechargement
+    window.addEventListener('load', function() {
+        const form = document.getElementById('editEventForm');
+        if (form) form.reset();
+
+        const previewContainer = document.getElementById('imagePreviewContainer');
+        const imagePreview = document.getElementById('imagePreview');
+        if (previewContainer && imagePreview && imagePreview.src === '') {
+            previewContainer.style.display = 'none';
+        }
+    });
+
+    // Aperçu dynamique de l'image
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            const previewContainer = document.getElementById('imagePreviewContainer');
+            const imagePreview = document.getElementById('imagePreview');
+            if (previewContainer && imagePreview) {
+                imagePreview.src = reader.result;
+                previewContainer.style.display = 'block';
+            }
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'enseignant/enseignatevent.html.twig' %}
+
+{% block title %}Contactez l'Administrateur{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white text-center py-3">
+                    <h2>Contactez l'Administrateur</h2>
+                </div>
+                <div class="card-body p-4">
+                    <!-- Afficher les messages flash -->
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ label }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+
+                    <!-- Formulaire de contact -->
+                    <form method="POST" action="{{ path('app_contactadmin') }}">
+                        <!-- Champ pour l'adresse email -->
+                        <div class="form-group mb-4">
+                            <label for="email" class="form-label">Votre Adresse Email</label>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Entrez votre adresse email" required>
+                        </div>
+
+                        <!-- Champ pour le message -->
+                        <div class="form-group mb-4">
+                            <label for="message" class="form-label">Votre Message</label>
+                            <textarea id="message" name="message" class="form-control" rows="6" placeholder="Entrez votre message ici..." required></textarea>
+                        </div>
+
+                        <!-- Bouton d'envoi -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg px-4 py-2">
+                                <i class="fas fa-paper-plane"></i> Envoyer
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

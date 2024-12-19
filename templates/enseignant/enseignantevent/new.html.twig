@@ -1,0 +1,121 @@
+{% extends 'enseignant/enseignatevent.html.twig' %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-success text-white text-center py-4 rounded-top">
+                    <h2><i class="fas fa-calendar-plus"></i> Créer un nouvel événement</h2>
+                </div>
+                <div class="card-body p-5 bg-light rounded-bottom">
+
+                    <!-- Formulaire -->
+                    {{ form_start(form, {'attr': {'id': 'eventForm', 'novalidate': 'novalidate'}}) }}
+
+                    <!-- Nom de l'événement -->
+                    <div class="form-group mb-4">
+                        <label for="NomEvenement" class="form-label text-success">
+                            <i class="fas fa-calendar-alt"></i> Nom de l'événement
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-success text-white">
+                                <i class="fas fa-calendar-alt"></i>
+                            </span>
+                            {{ form_widget(form.NomEvenement, {
+                                'attr': {
+                                    'class': 'form-control form-control-lg rounded-pill',
+                                    'placeholder': 'Entrez le nom de l\'événement'
+                                }
+                            }) }}
+                        </div>
+                        {{ form_errors(form.NomEvenement) }}
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-group mb-4">
+                        <label for="DescriptionEvenement" class="form-label text-success">
+                            <i class="fas fa-align-left"></i> Description de l'événement
+                        </label>
+                        {{ form_widget(form.DescriptionEvenement, {
+                            'attr': {
+                                'class': 'form-control form-control-lg rounded-3',
+                                'rows': 10,
+                                'placeholder': 'Décrivez votre événement en détail...'
+                            }
+                        }) }}
+                        {{ form_errors(form.DescriptionEvenement) }}
+                    </div>
+
+                    <!-- Image -->
+                    <div class="form-group mb-4">
+                        <label for="ImageEvenement" class="form-label text-success">
+                            <i class="fas fa-image"></i> Image de l'événement
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-success text-white">
+                                <i class="fas fa-image"></i>
+                            </span>
+                            {{ form_widget(form.ImageEvenement, {
+                                'attr': {
+                                    'class': 'form-control form-control-lg rounded-pill',
+                                    'onchange': 'previewImage(event)'
+                                }
+                            }) }}
+                        </div>
+                        {{ form_errors(form.ImageEvenement) }}
+                        <div id="imagePreviewContainer" class="text-center mt-3" style="display: none;">
+                            <img id="imagePreview" src="#" alt="Aperçu de l'image"
+                                 class="img-fluid rounded-3 shadow" style="max-height: 300px; max-width: 100%;"/>
+                        </div>
+                    </div>
+
+                    <!-- Type -->
+                    <div class="form-group mb-4">
+                        <label for="TypeEvenement" class="form-label text-success">
+                            <i class="fas fa-tags"></i> Type d'événement
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-success text-white">
+                                <i class="fas fa-tags"></i>
+                            </span>
+                            {{ form_widget(form.TypeEvenement, {
+                                'attr': {
+                                    'class': 'form-control form-control-lg rounded-pill',
+                                    'placeholder': 'Sélectionnez un type'
+                                }
+                            }) }}
+                        </div>
+                        {{ form_errors(form.TypeEvenement) }}
+                    </div>
+
+                    <!-- Bouton -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success btn-lg rounded-pill px-5 py-3">
+                            <i class="fas fa-save me-2"></i> Enregistrer l'événement
+                        </button>
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Prévisualisation de l'image
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function () {
+            const output = document.getElementById('imagePreview');
+            const previewContainer = document.getElementById('imagePreviewContainer');
+            if (output && previewContainer) {
+                output.src = reader.result;
+                previewContainer.style.display = 'block';
+            }
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+{% endblock %}
